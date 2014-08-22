@@ -4,16 +4,18 @@ using System.Collections;
 public class BirdMovement : MonoBehaviour {
 
 	Vector3 velocity = Vector3.zero;
-	public Vector3 gravity;
-	public Vector3 flapVelocity;
-	public float maxSpeed = 5f;
-	public float forwardSpeed = 10f;
+	float flapSpeed = 17000f;
+	public float forwardSpeed = 100f;
 
 	bool didFlap = false;
 
+	bool dead = false;
+
+	Animator animator;
+
 	// Use this for initialization
 	void Start () {
-	
+		animator = transform.GetComponentInChildren<Animator> ();
 	}
 	
 	// Update is called once per frame
@@ -25,26 +27,29 @@ public class BirdMovement : MonoBehaviour {
 
 	// FixedUpdate is for physics updates
 	void FixedUpdate () {
-		velocity.x = forwardSpeed;
-		velocity += gravity * Time.deltaTime;
+		if (dead)
+			return;
 
-		if (didFlap == true) {
+		rigidbody2D.AddForce (Vector2.right * forwardSpeed);
+
+		if (didFlap) {
+			rigidbody2D.AddForce(Vector2.up * flapSpeed);
+
+			animator.SetTrigger("DoFlap");
+
 			didFlap = false;
-			if(velocity.y < 0) {
-				velocity.y = 0;
-			}
-			velocity += flapVelocity;
 		}
 
-		velocity = Vector3.ClampMagnitude (velocity, maxSpeed);
-
-		transform.position += velocity * Time.deltaTime;
-
-		float angle = 0;
-		if(velocity.y < 0){
-			angle = Mathf.Lerp (0, -90, -velocity.y / maxSpeed);
+		if (rigidbody2D.velocity.y > 0) {
+				transform.rotation = Quaternion.Euler (0, 0, 0);
+		} else {
+			float angle = Mathf.Lerp (0, -90, -rigidbody2D.velocity.y / 200f);
+			transform.rotation = Quaternion.Euler(0, 0, angle);
 		}
+	}
 
-		transform.rotation = Quaternion.Euler (0, 0, angle);
+	void OnCollisionEnter2D(Collision2D collision) {
+		animator.SetTrigger ("Death");
+		dead = true;
 	}
 }

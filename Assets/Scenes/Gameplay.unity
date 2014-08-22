@@ -145,7 +145,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 104179606}
   - 114: {fileID: 104179607}
-  - 61: {fileID: 104179608}
+  - 50: {fileID: 104179609}
+  - 58: {fileID: 104179608}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -177,12 +178,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f98377483640d64bb89b3dc0a29b7b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravity: {x: 0, y: -200, z: 0}
-  flapVelocity: {x: 0, y: 100, z: 0}
-  maxSpeed: 300
   forwardSpeed: 100
---- !u!61 &104179608
-BoxCollider2D:
+--- !u!58 &104179608
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -190,8 +188,23 @@ BoxCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Size: {x: 15, y: 10}
+  m_Radius: 6.1500001
   m_Center: {x: 0, y: 0}
+--- !u!50 &104179609
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 104179605}
+  m_Mass: 1
+  m_LinearDrag: 1
+  m_AngularDrag: .0500000007
+  m_GravityScale: 50
+  m_FixedAngle: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
 --- !u!1 &143515645
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,6 +632,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ff7c11c66c27364792312824742a6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 104179605}
   groundSpeed: 50
 --- !u!1 &1123371552
 GameObject:
